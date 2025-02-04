@@ -1,0 +1,20 @@
+pan:
+fullname
+Father's name
+DOB
+image
+
+driving licence:
+fullname
+Father's name
+DOB
+address
+pin code
+image
+
+Election card:
+fullname
+Father's name
+Gender
+DOB
+image

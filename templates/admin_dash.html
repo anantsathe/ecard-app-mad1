@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+         .card{
+          width:200px;
+          
+         }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div id="canvas">
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">Welcome Admin123</a>
+              <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  
+                  <li class="nav-item">
+                    <a class="nav-link" href="/templates/login.html">Log Out</a>
+                  </li>
+                  
+                </ul>
+                <!-- <form class="d-flex">
+                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success" type="submit">Search</button>
+                </form> -->
+              </div>
+            </div>
+          </nav>
+            <div id="content">
+              
+              <h3 class="headings">Requested Cards</h3>
+              <div id="table" class="border">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Type of Card</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Current Status</th>
+                    <th scope="col" class="text-center">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Aadhar Card</td>
+                    <td>User 1</td>
+                    <td>Requested</td>
+                    <td class="justify-content-evenly d-flex">
+                        <a href="/templates/update_status.html" type="button" class="btn btn-primary">Update Status</a>
+                        <a href="/generate" type="button" class="btn btn-primary">Generate</a></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Pan Card</td>
+                    <td>User 2</td>
+                    <td>Under Verification</td>
+                    <td class="justify-content-evenly d-flex">
+                        <a href="/templates/update_status.html" type="button" class="btn btn-primary">Update Status</a>
+                        <a href="/generate" type="button" class="btn btn-primary">Generate</a></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Election Card</td>
+                    <td>User 2</td>
+                    <td>Verified</td>
+                    <td class="justify-content-evenly d-flex"><a href="/templates/update_status.html" type="button" class="btn btn-primary">Update Status</a>
+                      <a href="/generate" type="button" class="btn btn-primary">Generate</a></td>
+                  </tr>  
+                </tbody>
+              </table>
+              </div>
+
+                <div class="d-flex justify-content-around text-center" style="margin-top: 40px;">
+                  <div class="card bg-secondary p-3 ">
+                    <h5>Users</h5>
+                    <p>45629</p>
+                  </div>
+                  <div class="card bg-secondary p-3 ">
+                    <h5>Requests</h5>
+                    <p>4562</p>
+                  </div>
+                  <div class="card bg-secondary p-3 ">
+                    <h5>Generated</h5>
+                    <p>456</p>
+                  </div>
+                  <div class="card bg-secondary p-3 ">
+                    <h5>Avaiable cards</h5>
+                    <p>4</p> 
+                  </div> 
+                </div>   
+            </div>
+        </div>
+    </div>
+</body>
+</html>
