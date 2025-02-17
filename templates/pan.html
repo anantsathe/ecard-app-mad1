@@ -10,7 +10,7 @@
         <div id="canvas">
             <div id="form-body" style="height: 453px;width: 506px;margin-top: 180px;">
                 <h1>Add PAN Card Details</h1>
-                <form action="" method="post" enctype="multipart/form-data">
+                <form action="/request/pan/{{user_id}}" method="post">
                     <div class="mb-3">
                         <label for="Input1" class="form-label">Fullname</label>
                         <input type="text" class="form-control" id="Input1" name="fullname">
@@ -29,7 +29,7 @@
                     </div>    
                         
                     <div style="text-align: center;">
-                        <input type="submit" class="btn btn-primary" value="Request a Card">
+                        <input type="submit" class="btn btn-primary" value="Submit Details">
                     </div>
                 </form>
             </div>

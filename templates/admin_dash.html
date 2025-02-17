@@ -13,10 +13,10 @@
 </head>
 <body>
     <div id="main">
-        <div id="canvas">
+        <div id="canvas" class="overflow-auto">
           <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#">Welcome {{username}}</a>
+              <a class="navbar-brand" href="#">Welcome {{this_user.username}}</a>
               <div class="collapse navbar-collapse " id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   
@@ -35,44 +35,89 @@
             <div id="content">
               
               <h3 class="headings">Requested Cards</h3>
-              <div id="table" class="border">
+              <div id="table" class="border" style="max-height:200px;overflow-y: scroll;">
               <table class="table">
                 <thead>
                   <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Type of Card</th>
-                    <th scope="col">User</th>
+                    <th scope="col">Username</th>
                     <th scope="col">Current Status</th>
                     <th scope="col" class="text-center">Action</th>
                   </tr>
                 </thead>
                 <tbody>
+                  {% for info in all_info %}
+                     {% if info.atr_value == "requested" %}
+                        <tr>
+                          <th scope="row">{{info.id}}</th>
+                          <td>{{info.c_name}}</td>
+                          <td>{{info.creator.username}}</td><!--info.creator gives <user>-->
+                          <td>Requested</td>
+                          <td class="justify-content-evenly d-flex">
+                            <a href="" type="button" class="btn btn-warning">Review</a>
+                          </td>
+                        </tr>
+                      {% endif %}
+                  {% endfor %}
+                </tbody>
+              </table>
+              </div>
+              <h3 class="headings">Cards Under Verification</h3>
+              <div id="table" class="border" style="max-height:93px;overflow-y: scroll;">
+              <table class="table">
+                <thead>
                   <tr>
-                    <th scope="row">1</th>
-                    <td>Aadhar Card</td>
-                    <td>User 1</td>
-                    <td>Requested</td>
-                    <td class="justify-content-evenly d-flex">
-                        <a href="/templates/update_status.html" type="button" class="btn btn-primary">Update Status</a>
-                        <a href="/generate" type="button" class="btn btn-primary">Generate</a></td>
+                    <th scope="col">ID</th>
+                    <th scope="col">Type of Card</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Current Status</th>
+                    <th scope="col" class="text-center">Action</th>
                   </tr>
+                </thead>
+                <tbody>
+                  {% for info in all_info %}
+                     {% if info.atr_value == "under_verification" %}
+                        <tr>
+                          <th scope="row">{{info.id}}</th>
+                          <td>{{info.c_name}}</td>
+                          <td>{{info.creator.username}}</td><!--info.creator gives <user>-->
+                          <td>Under Verification</td>
+                          <td class="justify-content-evenly d-flex">
+                            <a href="" type="button" class="btn btn-primary">Verify</a>
+                          </td>
+                        </tr>
+                      {% endif %}
+                  {% endfor %}
+                </tbody>
+              </table>
+              </div>
+              <h3 class="headings">Verified Cards </h3>
+              <div id="table" class="border" style="max-height:93px;overflow-y: scroll;">
+              <table class="table">
+                <thead>
                   <tr>
-                    <th scope="row">2</th>
-                    <td>Pan Card</td>
-                    <td>User 2</td>
-                    <td>Under Verification</td>
-                    <td class="justify-content-evenly d-flex">
-                        <a href="/templates/update_status.html" type="button" class="btn btn-primary">Update Status</a>
-                        <a href="/generate" type="button" class="btn btn-primary">Generate</a></td>
+                    <th scope="col">ID</th>
+                    <th scope="col">Type of Card</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Current Status</th>
+                    <th scope="col" class="text-center">Action</th>
                   </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Election Card</td>
-                    <td>User 2</td>
-                    <td>Verified</td>
-                    <td class="justify-content-evenly d-flex"><a href="/templates/update_status.html" type="button" class="btn btn-primary">Update Status</a>
-                      <a href="/generate" type="button" class="btn btn-primary">Generate</a></td>
-                  </tr>  
+                </thead>
+                <tbody>
+                  {% for info in all_info %}
+                    {% if info.atr_value == "verified" %}
+                      <tr>
+                        <th scope="row">{{info.id}}</th>
+                        <td>{{info.c_name}}</td>
+                        <td>{{info.creator.username}}</td><!--info.creator gives <user>-->
+                        <td>Verified</td>
+                        <td class="justify-content-evenly d-flex">
+                          <a href="" type="button" class="btn btn-success">Generate</a>
+                        </td>
+                      </tr>
+                    {% endif %}
+                  {% endfor %}
                 </tbody>
               </table>
               </div>
@@ -91,7 +136,7 @@
                     <p>456</p>
                   </div>
                   <div class="card bg-secondary p-3 ">
-                    <h5>Avaiable cards</h5>
+                    <h5>Available cards</h5>
                     <p>4</p> 
                   </div> 
                 </div>   

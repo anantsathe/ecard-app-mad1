@@ -14,7 +14,7 @@ image
 
 Election card:
 fullname
-Father's name
+ward name
 Gender
 DOB
 image
