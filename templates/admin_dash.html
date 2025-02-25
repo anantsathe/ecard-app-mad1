@@ -55,7 +55,7 @@
                           <td>{{info.creator.username}}</td><!--info.creator gives <user>-->
                           <td>Requested</td>
                           <td class="justify-content-evenly d-flex">
-                            <a href="" type="button" class="btn btn-warning">Review</a>
+                            <a href="/update_status/{{info.c_name}}/{{info.user_id}}" type="button" class="btn btn-warning">Review</a>
                           </td>
                         </tr>
                       {% endif %}
@@ -84,7 +84,7 @@
                           <td>{{info.creator.username}}</td><!--info.creator gives <user>-->
                           <td>Under Verification</td>
                           <td class="justify-content-evenly d-flex">
-                            <a href="" type="button" class="btn btn-primary">Verify</a>
+                            <a href="/update_status/{{info.c_name}}/{{info.user_id}}" type="button" class="btn btn-primary">Verify</a>
                           </td>
                         </tr>
                       {% endif %}
@@ -113,7 +113,7 @@
                         <td>{{info.creator.username}}</td><!--info.creator gives <user>-->
                         <td>Verified</td>
                         <td class="justify-content-evenly d-flex">
-                          <a href="" type="button" class="btn btn-success">Generate</a>
+                          <a href="/generate/{{info.c_name}}/{{info.user_id}}" type="button" class="btn btn-success">Generate</a>
                         </td>
                       </tr>
                     {% endif %}

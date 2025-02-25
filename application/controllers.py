@@ -2,6 +2,8 @@ from flask import Flask,render_template,redirect,request
 from flask import current_app as app #it refers to the app object created
 
 from .models import *# both resides in same folder
+import random
+import string
 
 @app.route("/login",methods=["GET","POST"])#url with specific http method gives specific 
 def login():
@@ -145,4 +147,55 @@ def card_details(card,user_id):
 
             return render_template("voter.html",user_id=user_id)
     
+@app.route("/update_status/<card>/<int:user_id>",methods=["GET","POST"])
+def update_status(card,user_id):
+    details = Info.query.filter_by(user_id=user_id,c_name=card).all()
+    detail= Info.query.filter_by(user_id=user_id,c_name=card,atr_name="status").first()
+    if request.method == "POST":
+        status= request.form.get("status")
+        detail.atr_value = status
+        db.session.commit()
+        return redirect("/admin")
+
+    return render_template("update_status.html",user_id=user_id,card=card,details=details)
+
+@app.route("/generate/<card>/<int:user_id>")
+def generate(card,user_id):
+    detail= Info.query.filter_by(user_id=user_id,c_name=card,atr_name="status").first()
+    detail.atr_value = "generated"
+    db.session.commit()
+    key = ""
+    if card == "aadhar":
+        key = random.randint(10**11, 10**12 - 1)
+        # key = random.randint(1,10)
+    elif card == "pan":
+        first_part = ''.join(random.choices(string.ascii_uppercase, k=5))
+        middle_part = ''.join(random.choices(string.digits, k=4))
+        last_part = random.choice(string.ascii_uppercase)
+        key = first_part + middle_part + last_part
+    elif card == "driving":
+        part1 = ''.join(random.choices(string.ascii_uppercase, k=2))
+        part2 = ''.join(random.choices(string.digits, k=2))
+        part3 = ''.join(random.choices(string.digits, k=7))
+        key = part1+"-"+part2+"-2025-"+part3
+    elif card== "election":
+        first_part = ''.join(random.choices(string.ascii_uppercase, k=3))
+        last_part = ''.join(random.choices(string.digits, k=7))
+        key = first_part + last_part
+    info1 = Info(atr_name="key",atr_value=key,c_name=card,user_id=user_id)
+    db.session.add(info1)
+    db.session.commit()
+    return redirect("/admin")
+
+@app.route("/view/<card>/<int:user_id>")
+def view(card,user_id):
+    details = Info.query.filter_by(user_id=user_id,c_name=card).all()
+    if card == "aadhar":
+        return render_template("view_aadhar.html",details=details)
+    elif card == "pan":
+        return render_template("view_pan.html",details=details)
+    elif card == "driving":
+        return render_template("view_drive.html",details=details)
+    elif card == "election":
+        return render_template("view_elec.html",details=details)
 

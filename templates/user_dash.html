@@ -38,14 +38,18 @@
                           </tr>
                         </thead>
                         <tbody>
+                          {% for info in this_user.details %}
+                            {% if info.atr_value == "generated" %}
                           <tr>
-                            <th scope="row">1</th>
-                            <td>Aadhar Card</td>
+                            <th scope="row">{{info.id}}</th>
+                            <td>{{info.c_name}}</td>
                             <td class="d-flex justify-content-center">
-                                <a href="" type="button" class="btn btn-info mx-1" >View</a>
+                                <a href="/view/{{info.c_name}}/{{info.user_id}}" type="button" class="btn btn-info mx-1" >View</a>
                                 <a href="" type="button" class="btn btn-danger">Delete</a>
                             </td>
-                          </tr>
+                            {% endif %}
+                          {% endfor %}
+                          <!-- </tr>
                           <tr>
                             <th scope="row">2</th>
                             <td>Pan Card</td>
@@ -61,7 +65,7 @@
                                 <a href="" type="button" class="btn btn-info mx-1">View</a>
                                 <a href="" type="button" class="btn btn-danger">Delete</a>
                             </td>
-                          </tr>
+                          </tr> -->
                           
                         </tbody>
                       </table>
