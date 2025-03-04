@@ -59,3 +59,10 @@ python
 'admin@user.com'
 
 #to exit shell> exit()
+
+#aadhard card of ansh
+details = Info.query.filter_by(user_id=user_id,c_name=card).all()
+details = [<fullname>,<f_name>,<gender>,<dob>,<address>,<image>,<status>,<key>]
+fullname = details[0]
+f_name = details[1]
+gender = details[2]

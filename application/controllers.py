@@ -4,6 +4,10 @@ from flask import current_app as app #it refers to the app object created
 from .models import *# both resides in same folder
 import random
 import string
+#imports for graphs
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use("Agg")
 
 @app.route("/login",methods=["GET","POST"])#url with specific http method gives specific 
 def login():
@@ -46,7 +50,10 @@ def register():
 def admin_dash():
     this_user = User.query.filter_by(type="admin").first()
     all_info = Info.query.all()
-    return render_template("admin_dash.html", this_user=this_user, all_info=all_info)
+    users= len(User.query.all())-1
+    requests = len(Info.query.filter_by(atr_value="requested").all())
+    generated = len(Info.query.filter_by(atr_value="generated").all())
+    return render_template("admin_dash.html", this_user=this_user, all_info=all_info,users=users,requests=requests,generated=generated)
 
 @app.route("/home/<int:user_id>")
 def user_dash(user_id):
@@ -198,4 +205,60 @@ def view(card,user_id):
         return render_template("view_drive.html",details=details)
     elif card == "election":
         return render_template("view_elec.html",details=details)
+    
+@app.route("/results")
+def search():
+    search_word = request.args.get("search")
+    key = request.args.get("key")
+    if key == "user":
+        results = User.query.filter_by(username= search_word).all()
+    else:
+        results = Info.query.filter_by(atr_name="status",c_name = search_word.lower()).all()
+    return render_template("results.html",results=results,key=key)
 
+@app.route("/summary")
+def summary():
+    #requested cards
+    ra = len(Info.query.filter_by(atr_value="requested",c_name="aadhar").all())
+    rp = len(Info.query.filter_by(atr_value="requested",c_name="pan").all())
+    rd = len(Info.query.filter_by(atr_value="requested",c_name="driving").all())
+    re = len(Info.query.filter_by(atr_value="requested",c_name="election").all())
+    #cards under verification
+    uva = len(Info.query.filter_by(atr_value = "under_verification",c_name="aadhar").all())
+    uvp = len(Info.query.filter_by(atr_value = "under_verification",c_name="pan").all())
+    uvd = len(Info.query.filter_by(atr_value = "under_verification",c_name="driving").all())
+    uve = len(Info.query.filter_by(atr_value = "under_verification",c_name="election").all())
+    # verified cards
+    va = len(Info.query.filter_by(atr_value="verified",c_name="aadhar").all())
+    vp = len(Info.query.filter_by(atr_value="verified",c_name="pan").all())
+    vd = len(Info.query.filter_by(atr_value="verified",c_name="driving").all())
+    ve = len(Info.query.filter_by(atr_value="verified",c_name="election").all())
+    #generated cards
+    ga = len(Info.query.filter_by(atr_value="generated",c_name="aadhar").all())
+    gp = len(Info.query.filter_by(atr_value="generated",c_name="pan").all())
+    gd = len(Info.query.filter_by(atr_value="generated",c_name="driving").all())
+    ge = len(Info.query.filter_by(atr_value="generated",c_name="election").all())
+
+    #graphs
+    #pie chart (generated cards)
+    labels = ["Aadhar","Pan","Driving","Election"]
+    sizes =[ga,gp,gd,ge]
+    colors = ["red","yellow","blue","green"]
+    plt.pie(sizes,labels=labels,colors=colors,autopct = "%1.1f%%")
+    plt.title("Generated Cards")
+    plt.savefig("static/pie.png")
+    plt.clf()
+    #bar graph (requested cards)
+    labels = ["Aadhar","Pan","Driving","Election"]
+    sizes = [ra,rp,rd,re]
+    plt.bar(labels,sizes)
+    plt.xlabel("Requested Cards")
+    plt.ylabel("No of Cards")
+    plt.title("Requested Cards Distribution")
+    plt.savefig("static/bar.png")
+    plt.clf()
+
+    return render_template("summary.html",ra=ra,rp=rp,rd=rd,re=re,
+                           uva=uva,uvp=uvp,uvd=uvd,uve=uve,
+                           va=va,vp=vp,vd=vd,ve=ve,
+                           ga=ga,gp=gp,gd=gd,ge=ge)
