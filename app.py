@@ -13,6 +13,7 @@ def create_app():
 
 app = create_app()
 from application.controllers import * #2 controllers
+from application.resources import *
 # from application.models import * #indirect connection using controllers.py
 
 
